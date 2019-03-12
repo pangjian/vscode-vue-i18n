@@ -97,6 +97,7 @@
   },
   "dependencies": {
     "lodash": "^4.17.11",
-    "translation.js": "^0.7.5"
+    "translation.js": "^0.7.5",
+    "vue": "^2.6.8"
   }
 }

@@ -37,10 +37,18 @@ export class TransCenter {
 
     const { webview } = this.panel
 
-    webview.html = fs.readFileSync(
+    
+    let html = fs.readFileSync(
       path.resolve(Common.extension.extensionPath, 'static/transCenter.html'),
       'utf-8'
     )
+    const resourcePath = path.join(Common.extension.extensionPath, 'static/transCenter.html');
+    const dirPath = path.dirname(resourcePath);
+    html = html.replace(/(<link.+?href="|<script.+?src="|<img.+?src=")(.+?)"/g, (m, $1, $2) => {
+      return $1 + vscode.Uri.file(path.resolve(dirPath, $2)).with({ scheme: 'vscode-resource' }).toString() + '"';
+    })
+    
+    webview.html = html;
 
     this.initMessage()
     this.initFileWatcher()
@@ -130,7 +138,7 @@ export default (ctx: vscode.ExtensionContext) => {
   const cmd = vscode.commands.registerCommand(
     'extension.vue-i18n.transCenter',
     (uri: vscode.Uri) => {
-      new TransCenter(uri.path)
+      new TransCenter(uri.fsPath)
     }
   )
 

@@ -123,7 +123,8 @@ class I18nFile {
   }
 
   writeTransByKey(i18nKey: string, transItems: ITransItem[]) {
-    const [fileName, ...keyPath] = i18nKey.split('.')
+    const [...keyPath] = i18nKey.split('.')
+    const fileName = keyPath[0]
     const curTransItems = this.files[fileName] || []
 
     transItems.forEach(transItem => {
@@ -138,7 +139,8 @@ class I18nFile {
   }
 
   getTransByKey(i18nKey: string) {
-    const [fileName, ...keyPath] = i18nKey.split('.')
+    const [...keyPath] = i18nKey.split('.')
+    const fileName = keyPath[0]
 
     if (!this.files[fileName]) {
       const filePath = path.join(this.rootPath, `${fileName}.json`)

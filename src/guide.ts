@@ -34,6 +34,9 @@ class Guide {
     vscode.window.showInformationMessage('vue-i18n: 初始化好了')
   }
 
+  /**
+   * 选择路径配置到配置文件中
+   */  
   async pickDir(): Promise<string[]> {
     let dirs = await vscode.window.showOpenDialog({
       defaultUri: vscode.Uri.file(vscode.workspace.rootPath),
@@ -54,7 +57,7 @@ class Guide {
       }
     }
 
-    return dirs ? [...new Set(dirs.map(dirItem => dirItem.path))] : []
+    return dirs ? [...new Set(dirs.map(dirItem => dirItem.fsPath))] : []
   }
 }
 
